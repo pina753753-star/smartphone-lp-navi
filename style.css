@@ -1,15 +1,18 @@
 :root {
-  --sky: #b9d7ec;
-  --deep-sky: #6f9fbe;
-  --cream: #fff7e8;
+  --sky: #cfeaf8;
+  --sky-deep: #7fb8d7;
+  --cream: #fff4dc;
+  --cream-soft: #fffaf0;
   --white: #fffdf9;
-  --gold: #d7af62;
-  --gold-deep: #ad8240;
-  --ink: #3b4658;
-  --muted: #697588;
-  --shadow: 0 16px 40px rgba(91, 117, 143, 0.28);
-  --soft-shadow: 0 10px 28px rgba(155, 129, 80, 0.18);
-  --radius: 26px;
+  --pink: #f6a7bf;
+  --pink-soft: #ffe5ed;
+  --gold: #dfbd73;
+  --gold-deep: #a87435;
+  --ink: #3c4658;
+  --muted: #687487;
+  --shadow: 0 18px 44px rgba(76, 90, 122, 0.22);
+  --soft-shadow: 0 10px 26px rgba(166, 123, 59, 0.16);
+  --radius: 28px;
 }
 
 * {
@@ -18,16 +21,30 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
   color: var(--ink);
-  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", system-ui, sans-serif;
+  font-family: "Hiragino Maru Gothic ProN", "Yu Gothic", "Noto Sans JP", system-ui, sans-serif;
   background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.8), transparent 34%),
-    linear-gradient(135deg, #d9ecf7 0%, #fff7e8 55%, #edf7ff 100%);
+    linear-gradient(90deg, rgba(211, 236, 248, 0.72), rgba(255, 246, 227, 0.54), rgba(211, 236, 248, 0.72)),
+    url("tool-bg.PNG") center top / min(1024px, 150vw) auto fixed,
+    #d8edf8;
   overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 50% 7%, rgba(255, 255, 255, 0.52), transparent 20%),
+    radial-gradient(circle at 20% 28%, rgba(255, 229, 237, 0.3), transparent 23%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 250, 240, 0.44));
+  pointer-events: none;
 }
 
 button,
@@ -52,20 +69,35 @@ button {
   position: relative;
   width: min(100%, 430px);
   min-height: 100vh;
-  padding: 22px 16px 56px;
-  background-image: linear-gradient(rgba(245, 250, 255, 0.16), rgba(255, 250, 240, 0.22)), url("tool-bg.PNG");
-  background-size: cover;
-  background-position: top center;
-  box-shadow: 0 0 60px rgba(56, 87, 116, 0.22);
+  padding: 18px 16px 58px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 246, 227, 0.34) 47%, rgba(207, 234, 248, 0.12)),
+    url("tool-bg.PNG") top center / 100% auto repeat-y;
+  box-shadow: 0 0 70px rgba(42, 74, 104, 0.26);
   overflow: hidden;
+  isolation: isolate;
+}
+
+.storybook::before,
+.storybook::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
 }
 
 .storybook::before {
-  content: "";
-  position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(216, 235, 247, 0.18), rgba(255, 255, 255, 0.58) 42%, rgba(210, 230, 244, 0.22));
-  pointer-events: none;
+  z-index: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.14) 36%, rgba(255, 250, 240, 0.28) 100%);
+}
+
+.storybook::after {
+  inset: 12px;
+  z-index: 0;
+  border: 1px solid rgba(223, 189, 115, 0.5);
+  border-radius: 30px;
+  box-shadow: inset 0 0 40px rgba(255, 253, 249, 0.34);
 }
 
 .storybook > * {
@@ -74,27 +106,37 @@ button {
 }
 
 .hero {
-  min-height: 78vh;
+  min-height: 86vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   text-align: center;
-  padding: 80px 18px 56px;
+  padding: 56px 0 34px;
+}
+
+.hero-panel {
+  width: 100%;
+  padding: 24px 18px 22px;
+  background: linear-gradient(180deg, rgba(255, 253, 249, 0.76), rgba(255, 244, 220, 0.62));
+  border: 1px solid rgba(223, 189, 115, 0.58);
+  border-radius: 32px;
+  box-shadow: 0 18px 42px rgba(76, 90, 122, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(5px);
 }
 
 .sparkle {
   display: grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
-  margin-bottom: 12px;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 12px;
   color: var(--gold-deep);
-  background: rgba(255, 253, 249, 0.82);
-  border: 1px solid rgba(215, 175, 98, 0.55);
+  background: radial-gradient(circle, #fffdf9 42%, #ffe5ed 100%);
+  border: 1px solid rgba(223, 189, 115, 0.62);
   border-radius: 999px;
   box-shadow: var(--soft-shadow);
-  font-size: 28px;
+  font-size: 30px;
 }
 
 .eyebrow,
@@ -102,7 +144,7 @@ button {
   margin: 0 0 8px;
   color: var(--gold-deep);
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -112,34 +154,39 @@ h2,
 h3 {
   margin: 0;
   line-height: 1.28;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
 }
 
 h1 {
-  color: #315c7c;
-  font-size: clamp(2.35rem, 12vw, 3.25rem);
-  letter-spacing: 0.03em;
-  text-shadow: 0 3px 0 rgba(255, 255, 255, 0.8), 0 12px 30px rgba(70, 108, 139, 0.25);
+  color: #2f6685;
+  font-size: clamp(2.45rem, 11vw, 3.35rem);
+  letter-spacing: 0.04em;
+  text-shadow: 0 3px 0 rgba(255, 255, 255, 0.84), 0 14px 30px rgba(73, 111, 142, 0.26);
 }
 
 .hero-copy {
-  max-width: 320px;
-  margin: 18px auto 26px;
-  padding: 12px 16px;
+  max-width: 330px;
+  margin: 16px auto 24px;
   color: #43536a;
-  background: rgba(255, 253, 249, 0.74);
-  border: 1px solid rgba(215, 175, 98, 0.38);
-  border-radius: 20px;
-  box-shadow: var(--soft-shadow);
+  font-weight: 800;
+  line-height: 1.75;
+}
+
+.hero-note {
+  max-width: 315px;
+  margin: 0 auto 18px;
+  color: #6a5c73;
+  font-size: 0.86rem;
   font-weight: 700;
+  line-height: 1.7;
 }
 
 .primary-button,
 .ghost-button,
 .copy-all,
 .copy-button {
-  border: 0;
   border-radius: 999px;
-  font-weight: 800;
+  font-weight: 900;
   text-decoration: none;
   transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
@@ -148,11 +195,13 @@ h1 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 50px;
-  padding: 14px 24px;
+  min-height: 54px;
+  padding: 14px 25px;
   color: #fffdf9;
-  background: linear-gradient(135deg, #81b8db, #d7af62);
-  box-shadow: 0 14px 28px rgba(86, 132, 164, 0.36);
+  background: linear-gradient(135deg, #f3a1bb 0%, #f8c2ce 38%, #dfbd73 100%);
+  border: 1px solid rgba(255, 253, 249, 0.62);
+  box-shadow: 0 14px 28px rgba(180, 101, 133, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  text-shadow: 0 1px 2px rgba(120, 80, 50, 0.24);
 }
 
 .primary-button::after {
@@ -169,16 +218,20 @@ h1 {
 .card,
 .results-section,
 .output-card {
-  background: rgba(255, 253, 249, 0.86);
-  border: 1px solid rgba(215, 175, 98, 0.46);
+  background: linear-gradient(180deg, rgba(255, 253, 249, 0.84), rgba(255, 244, 220, 0.74));
+  border: 1px solid rgba(223, 189, 115, 0.58);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(7px);
 }
 
 .card {
-  margin: 20px 0;
+  margin: 22px 0;
   padding: 22px 16px;
+}
+
+.can-do {
+  margin-top: 6px;
 }
 
 .section-title-wrap,
@@ -194,17 +247,17 @@ h1 {
   place-items: center;
   width: 46px;
   height: 46px;
-  background: linear-gradient(145deg, #fffdf9, #e4f2fb);
-  border: 1px solid rgba(215, 175, 98, 0.5);
-  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(255, 253, 249, 0.96), rgba(255, 229, 237, 0.82));
+  border: 1px solid rgba(223, 189, 115, 0.54);
+  border-radius: 17px;
   box-shadow: var(--soft-shadow);
   font-size: 1.35rem;
 }
 
 .card h2,
 .results-section h2 {
-  color: #345c78;
-  font-size: 1.35rem;
+  color: #32647f;
+  font-size: 1.34rem;
 }
 
 .feature-grid {
@@ -218,16 +271,16 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 7px;
-  min-height: 94px;
+  min-height: 96px;
   justify-content: center;
   padding: 14px 10px;
   text-align: center;
-  background: rgba(236, 247, 255, 0.82);
-  border: 1px dashed rgba(109, 151, 181, 0.42);
-  border-radius: 20px;
+  background: rgba(255, 253, 249, 0.64);
+  border: 1px dashed rgba(223, 189, 115, 0.54);
+  border-radius: 22px;
   color: #41536a;
-  font-size: 1.25rem;
-  font-weight: 800;
+  font-size: 1.28rem;
+  font-weight: 900;
 }
 
 .feature-item span {
@@ -248,15 +301,15 @@ h1 {
 .form-group {
   position: relative;
   padding: 12px;
-  background: rgba(255, 247, 232, 0.58);
-  border: 1px solid rgba(215, 175, 98, 0.28);
-  border-radius: 20px;
+  background: rgba(255, 250, 240, 0.62);
+  border: 1px solid rgba(223, 189, 115, 0.32);
+  border-radius: 22px;
 }
 
 label {
   display: block;
   margin-bottom: 8px;
-  color: #4e6680;
+  color: #4d6680;
   font-size: 0.9rem;
   font-weight: 900;
 }
@@ -267,31 +320,31 @@ textarea {
   width: 100%;
   min-width: 0;
   color: var(--ink);
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(111, 159, 190, 0.34);
-  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(223, 189, 115, 0.34);
+  border-radius: 18px;
   outline: none;
   box-shadow: inset 0 2px 8px rgba(80, 116, 145, 0.06);
 }
 
 input,
 select {
-  min-height: 46px;
-  padding: 0 13px;
+  min-height: 50px;
+  padding: 0 14px;
 }
 
 textarea {
-  min-height: 98px;
+  min-height: 106px;
   resize: vertical;
-  padding: 12px 13px;
+  padding: 13px 14px;
   line-height: 1.65;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 4px rgba(215, 175, 98, 0.18);
+  border-color: var(--pink);
+  box-shadow: 0 0 0 4px rgba(246, 167, 191, 0.22);
 }
 
 .button-row {
@@ -309,9 +362,9 @@ textarea:focus {
 .copy-button {
   min-height: 44px;
   padding: 11px 16px;
-  color: #52667c;
-  background: rgba(255, 253, 249, 0.82);
-  border: 1px solid rgba(215, 175, 98, 0.46);
+  color: #5c6171;
+  background: rgba(255, 253, 249, 0.76);
+  border: 1px solid rgba(223, 189, 115, 0.52);
   box-shadow: var(--soft-shadow);
 }
 
@@ -360,7 +413,7 @@ textarea:focus {
 }
 
 .output-card h3 {
-  color: #345c78;
+  color: #32647f;
   font-size: 1.06rem;
 }
 
@@ -379,8 +432,8 @@ textarea:focus {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   color: #3e495a;
-  background: rgba(255, 255, 255, 0.74);
-  border: 1px solid rgba(111, 159, 190, 0.23);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(223, 189, 115, 0.24);
   border-radius: 18px;
   line-height: 1.75;
   font-size: 0.9rem;
@@ -392,13 +445,23 @@ textarea:focus {
   }
 
   .storybook {
-    border-radius: 34px;
+    border-radius: 36px;
   }
 }
 
 @media (max-width: 390px) {
   .storybook {
     padding-inline: 12px;
+  }
+
+  .hero {
+    min-height: 84vh;
+  }
+
+  .hero-panel,
+  .card,
+  .results-section {
+    border-radius: 24px;
   }
 
   .feature-grid {
