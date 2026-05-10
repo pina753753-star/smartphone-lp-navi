@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スマホLP制作ナビ</title>
+  <meta name="description" content="スマホだけでCodexに貼れるLP制作指示書を自動生成する、絵本風の初心者向けLP制作ナビです。">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <main class="storybook" aria-label="スマホLP制作ナビ">
+      <section class="hero" id="top">
+        <div class="sparkle">✦</div>
+        <p class="eyebrow">Cinderella Story LP Planner</p>
+        <h1>スマホLP制作ナビ</h1>
+        <p class="hero-copy">スマホだけで、Codexに貼れるLP制作指示書をつくろう</p>
+        <a class="primary-button" href="#planner">LP設計をはじめる</a>
+      </section>
+
+      <section class="card can-do" aria-labelledby="canDoTitle">
+        <div class="section-title-wrap">
+          <span class="icon-badge">🎀</span>
+          <div>
+            <p class="mini-label">できること</p>
+            <h2 id="canDoTitle">魔法のメモからLP設計へ</h2>
+          </div>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-item">📖<span>LP構成を作る</span></div>
+          <div class="feature-item">✍️<span>文章案を作る</span></div>
+          <div class="feature-item">🪄<span>画像生成プロンプトを作る</span></div>
+          <div class="feature-item">💎<span>Codex用プロンプトを作る</span></div>
+          <div class="feature-item">🏰<span>GitHub公開手順を出す</span></div>
+          <div class="feature-item">🔧<span>エラー対処プロンプトを出す</span></div>
+        </div>
+      </section>
+
+      <section class="card form-card" id="planner" aria-labelledby="formTitle">
+        <div class="section-title-wrap">
+          <span class="icon-badge">📘</span>
+          <div>
+            <p class="mini-label">LP制作フォーム</p>
+            <h2 id="formTitle">あなたのLP情報を教えてください</h2>
+          </div>
+        </div>
+        <p class="lead">未入力があっても大丈夫。「未入力」として、あとから編集しやすい指示書を作ります。</p>
+
+        <form id="lpForm" class="lp-form">
+          <div class="form-group">
+            <label for="clientName">依頼者名</label>
+            <input id="clientName" name="clientName" type="text" placeholder="例：シンデレラ企画">
+          </div>
+          <div class="form-group">
+            <label for="serviceName">商品名・サービス名</label>
+            <input id="serviceName" name="serviceName" type="text" placeholder="例：スマホLP講座">
+          </div>
+          <div class="form-group">
+            <label for="lpGoal">LPの目的</label>
+            <select id="lpGoal" name="lpGoal">
+              <option value="LINE登録">LINE登録</option>
+              <option value="note販売">note販売</option>
+              <option value="相談予約">相談予約</option>
+              <option value="商品購入">商品購入</option>
+              <option value="無料体験">無料体験</option>
+              <option value="その他">その他</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="target">ターゲット</label>
+            <textarea id="target" name="target" placeholder="例：スマホだけで副業LPを作りたい初心者女性"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="pain">ターゲットの悩み</label>
+            <textarea id="pain" name="pain" placeholder="例：何を書けばいいかわからない、PCが苦手"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="future">叶えたい未来</label>
+            <textarea id="future" name="future" placeholder="例：自分でLPを公開して申し込みを受け取れる"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="strength">一番伝えたい強み</label>
+            <textarea id="strength" name="strength" placeholder="例：スマホだけで迷わず作れる手順つき"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="materials">入れたい文章・素材</label>
+            <textarea id="materials" name="materials" placeholder="例：プロフィール、実績、写真、口コミ"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="designMood">デザインの雰囲気</label>
+            <select id="designMood" name="designMood">
+              <option value="絵本風">絵本風</option>
+              <option value="美容系">美容系</option>
+              <option value="高級感">高級感</option>
+              <option value="ナチュラル">ナチュラル</option>
+              <option value="ポップ">ポップ</option>
+              <option value="シンプル">シンプル</option>
+              <option value="女性向け">女性向け</option>
+              <option value="その他">その他</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="lpLength">LPの長さ</label>
+            <select id="lpLength" name="lpLength">
+              <option value="短尺LP">短尺LP</option>
+              <option value="通常LP" selected>通常LP</option>
+              <option value="長尺LP">長尺LP</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="imageUse">画像を使うか</label>
+            <select id="imageUse" name="imageUse">
+              <option value="画像あり">画像あり</option>
+              <option value="画像なし">画像なし</option>
+              <option value="画像生成プロンプトがほしい" selected>画像生成プロンプトがほしい</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="ctaText">CTA文言</label>
+            <input id="ctaText" name="ctaText" type="text" placeholder="例：無料で相談する">
+          </div>
+          <div class="form-group">
+            <label for="ctaUrl">CTAリンク先URL</label>
+            <input id="ctaUrl" name="ctaUrl" type="url" placeholder="https://example.com">
+          </div>
+          <div class="form-group">
+            <label for="mustDo">絶対に守ってほしいこと</label>
+            <textarea id="mustDo" name="mustDo" placeholder="例：スマホで読みやすく、CTAを目立たせる"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="dontDo">やってほしくないこと</label>
+            <textarea id="dontDo" name="dontDo" placeholder="例：文字を画像に焼き込む、横スクロールを出す"></textarea>
+          </div>
+          <div class="button-row">
+            <button type="submit" class="primary-button generate-button">LP制作指示書を作る</button>
+            <button type="button" class="ghost-button" id="resetButton">リセット</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="results-section" id="results" aria-live="polite" aria-labelledby="resultsTitle">
+        <div class="results-head">
+          <div>
+            <p class="mini-label">生成結果</p>
+            <h2 id="resultsTitle">完成したLP制作指示書</h2>
+          </div>
+          <button type="button" class="copy-all" id="copyAllButton">全部まとめてコピー</button>
+        </div>
+        <p class="copy-status" id="copyStatus" role="status"></p>
+        <div id="outputCards" class="output-cards"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
