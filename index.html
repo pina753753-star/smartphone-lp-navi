@@ -1,170 +1,421 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>スマホLP制作ナビ</title>
-  <meta name="description" content="スマホだけでCodexに貼れるLP制作指示書を自動生成する、絵本風・シンデレラ風のLP制作ナビです。">
+  <meta name="description" content="スマホだけでCodexに貼れるLP制作指示書を作る、絵本風のLP制作ナビです。">
   <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --navy: #254366;
+      --blue: #cfe8f6;
+      --blue2: #eaf6fb;
+      --cream: #fff8ea;
+      --paper: #fffdf8;
+      --gold: #d8ad55;
+      --gold2: #f6df9e;
+      --pink: #f3a8be;
+      --coral: #e88678;
+      --brown: #6c5142;
+      --line: rgba(190, 151, 76, .34);
+      --shadow: 0 18px 40px rgba(52, 93, 125, .18);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--navy);
+      background:
+        radial-gradient(circle at 10% 8%, rgba(255,255,255,.95) 0 9px, transparent 10px),
+        radial-gradient(circle at 88% 14%, rgba(246,223,158,.8) 0 7px, transparent 8px),
+        linear-gradient(180deg, #cde8f6 0%, #edf8fc 34%, #fff4df 100%);
+      font-family: "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", "YuGothic", system-ui, sans-serif;
+      letter-spacing: .02em;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.28) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.22) 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: .45;
+    }
+
+    .page-shell { width: 100%; display: flex; justify-content: center; }
+    .lpkit {
+      width: min(100%, 430px);
+      padding: 14px 12px 56px;
+      position: relative;
+    }
+
+    .lpkit-hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-content: center;
+      gap: 18px;
+      padding: 16px 0 30px;
+    }
+
+    .cover-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      background:
+        linear-gradient(180deg, rgba(255,253,248,.96), rgba(255,242,218,.94));
+      border: 1px solid rgba(216,173,85,.5);
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+
+    .cover-card::before {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border: 1px dashed rgba(216,173,85,.45);
+      border-radius: 26px;
+      pointer-events: none;
+    }
+
+    .mini-visual {
+      width: 100%;
+      height: 185px;
+      display: block;
+      object-fit: cover;
+      object-position: center 37%;
+      border-radius: 24px;
+      border: 1px solid rgba(144,183,203,.45);
+      opacity: .92;
+      filter: saturate(.96) brightness(1.03);
+    }
+
+    .title-card {
+      position: relative;
+      margin-top: -36px;
+      margin-inline: 14px;
+      padding: 26px 18px 20px;
+      text-align: center;
+      background: rgba(255,253,248,.96);
+      border: 1px solid rgba(216,173,85,.5);
+      border-radius: 30px;
+      box-shadow: 0 16px 34px rgba(52,93,125,.18);
+    }
+
+    .title-card::before {
+      content: "✦";
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #fff, #ffe8f0 55%, var(--gold2));
+      color: #ad7e2c;
+      border: 1px solid rgba(216,173,85,.52);
+      border-radius: 999px;
+      box-shadow: 0 10px 20px rgba(160, 112, 43, .16);
+    }
+
+    .eyebrow, .mini-label, .step-tag {
+      color: #a8782e;
+      font-size: .68rem;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 { margin: 0; color: var(--navy); line-height: 1.34; }
+    h1 {
+      margin-top: 8px;
+      font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+      font-size: clamp(2.25rem, 10vw, 3.2rem);
+      letter-spacing: .05em;
+      text-shadow: 0 2px 0 #fff, 0 14px 24px rgba(39,70,101,.15);
+    }
+    h2 { font-size: 1.42rem; letter-spacing: .03em; }
+    h3 { font-size: 1.05rem; }
+
+    .hero-copy {
+      margin: 13px auto 17px;
+      color: var(--brown);
+      font-weight: 800;
+      line-height: 1.85;
+    }
+
+    .primary-button, .ghost-button, .copy-all, .copy-button {
+      min-height: 52px;
+      border-radius: 999px;
+      border: 0;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .primary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 22px;
+      color: #fff;
+      background: linear-gradient(135deg, #ee86a8 0%, #f6b5c9 38%, #f7d77c 100%);
+      box-shadow: 0 14px 28px rgba(193,114,94,.28);
+    }
+
+    .primary-button::after { content: " ✨"; }
+
+    .ghost-button {
+      width: 100%;
+      color: var(--brown);
+      background: #fffaf0;
+      border: 1px solid rgba(216,173,85,.44);
+    }
+
+    .story-card {
+      margin-top: 18px;
+      padding: 22px 16px;
+      border-radius: 30px;
+      background: rgba(255,253,248,.94);
+      border: 1px solid rgba(216,173,85,.42);
+      box-shadow: var(--shadow);
+    }
+
+    .section-title-wrap, .results-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .icon-badge {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 17px;
+      background: linear-gradient(135deg, #fff, #ffe8ef);
+      border: 1px solid rgba(216,173,85,.36);
+      box-shadow: 0 10px 20px rgba(58,87,119,.1);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .feature-item {
+      min-height: 102px;
+      padding: 12px 8px;
+      display: grid;
+      place-items: center;
+      gap: 5px;
+      text-align: center;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #ffffff, #fff1db);
+      border: 1px solid rgba(139,183,210,.38);
+      color: var(--brown);
+      font-size: .82rem;
+      font-weight: 900;
+    }
+
+    .feature-icon { font-size: 1.35rem; }
+    .feature-label { font-size: .56rem; color: #a8782e; letter-spacing: .12em; text-transform: uppercase; }
+
+    .lead, .result-intro {
+      color: #5b7189;
+      font-size: .9rem;
+      font-weight: 700;
+      line-height: 1.85;
+    }
+
+    .lp-form { display: grid; gap: 18px; }
+
+    .page-step {
+      margin: 0;
+      padding: 18px 13px 14px;
+      display: grid;
+      gap: 12px;
+      border: 1px solid rgba(216,173,85,.35);
+      border-radius: 26px;
+      background:
+        linear-gradient(rgba(255,255,255,.72), rgba(255,255,255,.72)),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(139,183,210,.18) 32px 33px),
+        #fff8ed;
+      box-shadow: inset 0 0 0 4px rgba(255,255,255,.5);
+    }
+
+    legend {
+      padding: 8px 14px;
+      color: #fff;
+      background: linear-gradient(135deg, #82b8d3, #f0aabe);
+      border-radius: 999px;
+      font-size: .92rem;
+      font-weight: 900;
+      box-shadow: 0 8px 18px rgba(71,107,138,.15);
+    }
+
+    .form-group {
+      padding: 12px;
+      border: 1px solid rgba(216,173,85,.28);
+      border-radius: 20px;
+      background: rgba(255,255,255,.72);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--brown);
+      font-size: .9rem;
+      font-weight: 900;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      min-width: 0;
+      border: 1px solid rgba(139,183,210,.48);
+      border-radius: 16px;
+      background: #fff;
+      color: var(--navy);
+      box-shadow: inset 0 2px 7px rgba(66,62,50,.06);
+      outline: none;
+    }
+
+    input, select { min-height: 50px; padding: 0 14px; }
+    textarea { min-height: 105px; padding: 13px 14px; line-height: 1.65; resize: vertical; }
+    input:focus, select:focus, textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(246,223,158,.35); }
+
+    .button-row { display: grid; gap: 10px; }
+    .generate-button { width: 100%; }
+
+    .results-head {
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .copy-all, .copy-button {
+      min-height: 42px;
+      padding: 10px 13px;
+      color: var(--navy);
+      background: #fff5dc;
+      border: 1px solid rgba(216,173,85,.44);
+      box-shadow: 0 8px 18px rgba(91,69,36,.09);
+    }
+
+    .output-cards { display: grid; gap: 14px; margin-top: 14px; }
+    .output-card {
+      padding: 15px;
+      background: #fffdf8;
+      border: 1px solid rgba(216,173,85,.34);
+      border-radius: 22px;
+    }
+    .output-card-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+    .output-text {
+      max-height: 360px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 0;
+      color: #40576f;
+      font: 700 .86rem/1.75 "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: #fff8eb;
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .copy-status { min-height: 1.3em; color: #0f7a6e; font-weight: 900; text-align: center; }
+
+    @media (max-width: 390px) {
+      .lpkit { padding-inline: 10px; }
+      .mini-visual { height: 165px; }
+      .feature-grid { gap: 8px; }
+      .feature-item { min-height: 96px; font-size: .78rem; }
+      h1 { font-size: 2.15rem; }
+      .story-card { padding-inline: 14px; }
+    }
+  </style>
 </head>
 <body>
   <div class="page-shell">
-    <main class="storybook" aria-label="スマホLP制作ナビ">
-      <div class="storybook-sparkles" aria-hidden="true">
-        <span class="star star-1">✦</span>
-        <span class="star star-2">✧</span>
-        <span class="star star-3">✦</span>
-        <span class="carriage">♛</span>
-      </div>
-
-      <section class="hero" id="top">
-        <div class="hero-visual" aria-label="絵本風・シンデレラ風のメインビジュアル">
-          <div class="cover-ornament" aria-hidden="true">
-            <span class="castle castle-left"></span>
-            <span class="castle castle-center"></span>
-            <span class="castle castle-right"></span>
-          </div>
-          <img src="tool-bg.PNG" alt="絵本風・シンデレラ風の淡い水色とクリーム色の装飾フレーム">
-          <span class="glass-shoe" aria-hidden="true">◌</span>
-          <span class="visual-caption">storybook magic design</span>
+    <main class="lpkit" aria-label="スマホLP制作ナビ">
+      <section class="lpkit-hero" id="top">
+        <div class="cover-card">
+          <img class="mini-visual" src="tool-bg.PNG" alt="絵本風の案内役とシンデレラ風の世界観">
         </div>
-
-        <div class="hero-panel story-card">
+        <div class="title-card">
           <p class="eyebrow">Cinderella Story LP Planner</p>
-          <h1>スマホLP制作ナビ</h1>
-          <p class="hero-copy">スマホだけで、Codexに貼れるLP制作指示書をつくろう</p>
-          <p class="hero-note">魔法のノートに書き込むだけで、LP構成・文章案・画像プロンプト・公開手順まで物語のように整えます。</p>
+          <h1>スマホLP制作<br>ナビ</h1>
+          <p class="hero-copy">スマホだけで、Codexに貼れるLP制作指示書をつくろう。</p>
           <a class="primary-button" href="#planner"><span>LP設計をはじめる</span></a>
         </div>
       </section>
 
       <section class="story-card can-do" aria-labelledby="canDoTitle">
-        <div class="section-title-wrap ribbon-title">
+        <div class="section-title-wrap">
           <span class="icon-badge" aria-hidden="true">🎀</span>
           <div>
             <p class="mini-label">できること</p>
-            <h2 id="canDoTitle">6つの魔法でLPづくりを案内</h2>
+            <h2 id="canDoTitle">魔法のメモからLP設計へ</h2>
           </div>
         </div>
         <div class="feature-grid">
-          <div class="feature-item"><span class="feature-icon">📖</span><span class="feature-label">Story structure</span><span>LP構成を作る</span></div>
-          <div class="feature-item"><span class="feature-icon">✍️</span><span class="feature-label">Copy writing</span><span>文章案を作る</span></div>
-          <div class="feature-item"><span class="feature-icon">🪄</span><span class="feature-label">Image prompt</span><span>画像生成プロンプトを作る</span></div>
-          <div class="feature-item"><span class="feature-icon">💎</span><span class="feature-label">Codex prompt</span><span>Codex用プロンプトを作る</span></div>
-          <div class="feature-item"><span class="feature-icon">🏰</span><span class="feature-label">Publish guide</span><span>GitHub公開手順を出す</span></div>
-          <div class="feature-item"><span class="feature-icon">🔧</span><span class="feature-label">Magic repair</span><span>エラー対処プロンプトを出す</span></div>
+          <div class="feature-item"><span class="feature-icon">📖</span><span class="feature-label">Story</span><span>LP構成を作る</span></div>
+          <div class="feature-item"><span class="feature-icon">✍️</span><span class="feature-label">Copy</span><span>文章案を作る</span></div>
+          <div class="feature-item"><span class="feature-icon">🪄</span><span class="feature-label">Image</span><span>画像プロンプトを作る</span></div>
+          <div class="feature-item"><span class="feature-icon">💎</span><span class="feature-label">Codex</span><span>Codex指示書を作る</span></div>
+          <div class="feature-item"><span class="feature-icon">🏰</span><span class="feature-label">Pages</span><span>公開手順を出す</span></div>
+          <div class="feature-item"><span class="feature-icon">🔧</span><span class="feature-label">Repair</span><span>修正文を出す</span></div>
         </div>
       </section>
 
       <section class="story-card form-card" id="planner" aria-labelledby="formTitle">
-        <div class="section-title-wrap ribbon-title">
+        <div class="section-title-wrap">
           <span class="icon-badge" aria-hidden="true">📘</span>
           <div>
             <p class="mini-label">LP制作フォーム</p>
-            <h2 id="formTitle">魔法のヒアリングシート</h2>
+            <h2 id="formTitle">あなたのLP情報を教えてください</h2>
           </div>
         </div>
-        <p class="lead">ページをめくるように入力してください。未入力でも「未入力」として、あとから直しやすい制作指示書にします。</p>
+        <p class="lead">未入力があっても大丈夫。「未入力」として、あとから直しやすい指示書を作ります。</p>
 
         <form id="lpForm" class="lp-form">
           <fieldset class="page-step basic-step">
-            <legend><span>Page 1</span>基本情報</legend>
-            <div class="form-group">
-              <label for="clientName">依頼者名</label>
-              <input id="clientName" name="clientName" type="text" placeholder="例：シンデレラ企画">
-            </div>
-            <div class="form-group">
-              <label for="serviceName">商品名・サービス名</label>
-              <input id="serviceName" name="serviceName" type="text" placeholder="例：スマホLP講座">
-            </div>
-            <div class="form-group">
-              <label for="lpGoal">LPの目的</label>
-              <select id="lpGoal" name="lpGoal">
-                <option value="LINE登録">LINE登録</option>
-                <option value="note販売">note販売</option>
-                <option value="相談予約">相談予約</option>
-                <option value="商品購入">商品購入</option>
-                <option value="無料体験">無料体験</option>
-                <option value="その他">その他</option>
-              </select>
-            </div>
+            <legend><span>Page 1</span> 基本情報</legend>
+            <div class="form-group"><label for="clientName">依頼者名</label><input id="clientName" name="clientName" type="text" placeholder="例：シンデレラ企画"></div>
+            <div class="form-group"><label for="serviceName">商品名・サービス名</label><input id="serviceName" name="serviceName" type="text" placeholder="例：スマホLP講座"></div>
+            <div class="form-group"><label for="lpGoal">LPの目的</label><select id="lpGoal" name="lpGoal"><option value="LINE登録">LINE登録</option><option value="note販売">note販売</option><option value="相談予約">相談予約</option><option value="商品購入">商品購入</option><option value="無料体験">無料体験</option><option value="その他">その他</option></select></div>
           </fieldset>
 
           <fieldset class="page-step target-step">
-            <legend><span>Page 2</span>ターゲット</legend>
-            <div class="form-group wide-note">
-              <label for="target">ターゲット</label>
-              <textarea id="target" name="target" placeholder="例：スマホだけで副業LPを作りたい初心者女性"></textarea>
-            </div>
-            <div class="form-group wide-note">
-              <label for="pain">ターゲットの悩み</label>
-              <textarea id="pain" name="pain" placeholder="例：何を書けばいいかわからない、PCが苦手"></textarea>
-            </div>
-            <div class="form-group wide-note">
-              <label for="future">叶えたい未来</label>
-              <textarea id="future" name="future" placeholder="例：自分でLPを公開して申し込みを受け取れる"></textarea>
-            </div>
+            <legend><span>Page 2</span> ターゲット</legend>
+            <div class="form-group"><label for="target">ターゲット</label><textarea id="target" name="target" placeholder="例：スマホだけで副業LPを作りたい初心者女性"></textarea></div>
+            <div class="form-group"><label for="pain">ターゲットの悩み</label><textarea id="pain" name="pain" placeholder="例：何を書けばいいかわからない、PCが苦手"></textarea></div>
+            <div class="form-group"><label for="future">叶えたい未来</label><textarea id="future" name="future" placeholder="例：自分でLPを公開して申し込みを受け取れる"></textarea></div>
           </fieldset>
 
           <fieldset class="page-step design-step">
-            <legend><span>Page 3</span>デザイン</legend>
-            <div class="form-group wide-note">
-              <label for="strength">一番伝えたい強み</label>
-              <textarea id="strength" name="strength" placeholder="例：スマホだけで迷わず作れる手順つき"></textarea>
-            </div>
-            <div class="form-group wide-note">
-              <label for="materials">入れたい文章・素材</label>
-              <textarea id="materials" name="materials" placeholder="例：プロフィール、実績、写真、口コミ"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="designMood">デザインの雰囲気</label>
-              <select id="designMood" name="designMood">
-                <option value="絵本風">絵本風</option>
-                <option value="美容系">美容系</option>
-                <option value="高級感">高級感</option>
-                <option value="ナチュラル">ナチュラル</option>
-                <option value="ポップ">ポップ</option>
-                <option value="シンプル">シンプル</option>
-                <option value="女性向け">女性向け</option>
-                <option value="その他">その他</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="lpLength">LPの長さ</label>
-              <select id="lpLength" name="lpLength">
-                <option value="短尺LP">短尺LP</option>
-                <option value="通常LP" selected>通常LP</option>
-                <option value="長尺LP">長尺LP</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="imageUse">画像を使うか</label>
-              <select id="imageUse" name="imageUse">
-                <option value="画像あり">画像あり</option>
-                <option value="画像なし">画像なし</option>
-                <option value="画像生成プロンプトがほしい" selected>画像生成プロンプトがほしい</option>
-              </select>
-            </div>
+            <legend><span>Page 3</span> デザイン</legend>
+            <div class="form-group"><label for="strength">一番伝えたい強み</label><textarea id="strength" name="strength" placeholder="例：スマホだけで迷わず作れる手順つき"></textarea></div>
+            <div class="form-group"><label for="materials">入れたい文章・素材</label><textarea id="materials" name="materials" placeholder="例：プロフィール、実績、写真、口コミ"></textarea></div>
+            <div class="form-group"><label for="designMood">デザインの雰囲気</label><select id="designMood" name="designMood"><option value="絵本風">絵本風</option><option value="美容系">美容系</option><option value="高級感">高級感</option><option value="ナチュラル">ナチュラル</option><option value="ポップ">ポップ</option><option value="シンプル">シンプル</option><option value="女性向け">女性向け</option><option value="その他">その他</option></select></div>
+            <div class="form-group"><label for="lpLength">LPの長さ</label><select id="lpLength" name="lpLength"><option value="短尺LP">短尺LP</option><option value="通常LP" selected>通常LP</option><option value="長尺LP">長尺LP</option></select></div>
+            <div class="form-group"><label for="imageUse">画像を使うか</label><select id="imageUse" name="imageUse"><option value="画像あり">画像あり</option><option value="画像なし">画像なし</option><option value="画像生成プロンプトがほしい" selected>画像生成プロンプトがほしい</option></select></div>
           </fieldset>
 
           <fieldset class="page-step cta-step">
-            <legend><span>Page 4</span>CTA</legend>
-            <div class="form-group">
-              <label for="ctaText">CTA文言</label>
-              <input id="ctaText" name="ctaText" type="text" placeholder="例：無料で相談する">
-            </div>
-            <div class="form-group">
-              <label for="ctaUrl">CTAリンク先URL</label>
-              <input id="ctaUrl" name="ctaUrl" type="url" placeholder="https://example.com">
-            </div>
-            <div class="form-group wide-note">
-              <label for="mustDo">絶対に守ってほしいこと</label>
-              <textarea id="mustDo" name="mustDo" placeholder="例：スマホで読みやすく、CTAを目立たせる"></textarea>
-            </div>
-            <div class="form-group wide-note">
-              <label for="dontDo">やってほしくないこと</label>
-              <textarea id="dontDo" name="dontDo" placeholder="例：文字を画像に焼き込む、横スクロールを出す"></textarea>
-            </div>
+            <legend><span>Page 4</span> CTA</legend>
+            <div class="form-group"><label for="ctaText">CTA文言</label><input id="ctaText" name="ctaText" type="text" placeholder="例：無料で相談する"></div>
+            <div class="form-group"><label for="ctaUrl">CTAリンク先URL</label><input id="ctaUrl" name="ctaUrl" type="url" placeholder="https://example.com"></div>
+            <div class="form-group"><label for="mustDo">絶対に守ってほしいこと</label><textarea id="mustDo" name="mustDo" placeholder="例：スマホで読みやすく、CTAを目立たせる"></textarea></div>
+            <div class="form-group"><label for="dontDo">やってほしくないこと</label><textarea id="dontDo" name="dontDo" placeholder="例：文字を画像に焼き込む、横スクロールを出す"></textarea></div>
           </fieldset>
 
           <div class="button-row">
@@ -175,20 +426,16 @@
       </section>
 
       <section class="results-section story-card" id="results" aria-live="polite" aria-labelledby="resultsTitle">
-        <div class="results-head ribbon-title">
-          <div>
-            <p class="mini-label">生成結果</p>
-            <h2 id="resultsTitle">完成したLP制作指示書</h2>
-          </div>
-          <button type="button" class="copy-all" id="copyAllButton">全部まとめてコピー</button>
+        <div class="results-head">
+          <div><p class="mini-label">生成結果</p><h2 id="resultsTitle">完成したLP制作指示書</h2></div>
+          <button type="button" class="copy-all" id="copyAllButton">全部コピー</button>
         </div>
-        <p class="result-intro">ここに、Codexへそのまま渡せる「絵本の手紙」のような制作指示書が完成します。長い文章もカードの中で読みやすくスクロールできます。</p>
+        <p class="result-intro">ここに、Codexへそのまま渡せる制作指示書が完成します。</p>
         <p class="copy-status" id="copyStatus" role="status"></p>
         <div id="outputCards" class="output-cards"></div>
       </section>
     </main>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
