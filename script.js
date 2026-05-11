@@ -157,7 +157,18 @@ function buildSectionCopy(data, sections) {
 }
 
 function buildDesignDirections(data) {
-  return `全体トーン：${data.designMood}。水色、クリーム、白、淡いゴールドを基調に、絵本をめくるようなやさしい世界観にする。\n\nレイアウト：スマホファースト。PCでは中央に390px〜430px程度のスマホ幅で表示し、横スクロールを出さない。\n\n装飾：角丸カード、ふんわりした影、リボン、星、扉、本、ガラスの靴、馬車を連想させる小さな飾りを使う。\n\n文字：画像に文字を焼き込まず、見出し・本文・ボタンはHTML/CSSで重ねる。読みやすい濃い青グレーを使う。\n\nCTA：${data.ctaText}ボタンは淡いゴールドと水色のグラデーションで目立たせ、リンク先は${data.ctaUrl}にする。\n\n守ること：${data.mustDo}\n避けること：${data.dontDo}`;
+  return `全体トーン：${data.designMood}。水色、クリーム、白、淡いゴールド、淡いピンクを基調に、絵本をめくるようなやさしい世界観にする。
+
+レイアウト：スマホファースト。PCでは中央に390px〜430px程度のスマホ幅で表示し、横スクロールを出さない。固定画像の枠へフォームや文章を無理に合わせず、HTML/CSSのセクションとして伸びても崩れない設計にする。
+
+装飾：魔法のノート、招待状、お城、星、リボン、ガラスの靴、馬車を連想させる小さな飾りを使う。背景画像は世界観の参考・装飾として扱い、1枚画像に文字やフォームを重ねる方式にしない。
+
+文字：画像に文字を焼き込まず、見出し・本文・ボタンはHTML/CSSで表示する。読みやすい濃い青グレーやブラウンを使う。
+
+CTA：${data.ctaText}ボタンは淡いピンク〜淡いゴールドのグラデーションで目立たせ、リンク先は${data.ctaUrl}にする。
+
+守ること：${data.mustDo}
+避けること：${data.dontDo}`;
 }
 
 function buildImagePrompts(data) {
@@ -167,9 +178,9 @@ function buildImagePrompts(data) {
 function buildCodexPrompt(data, sections, sectionCopy, designDirections, imagePrompts) {
   const imageInstruction = data.imageUse === '画像なし'
     ? '画像なしでも成立するように、CSSのグラデーションと装飾だけでかわいく仕上げてください。'
-    : '画像LPの場合は、完成画像をHTMLで表示し、その上にCTAリンクをHTML/CSSで重ねてください。画像ファイル名はconstまたはCSS変数で後から変更しやすくしてください。';
+    : '画像はヒーロービジュアルや小さな装飾として使い、1枚の完成画像にフォーム・文章・CTAを無理に重ねる方式は避けてください。主要な文字、CTA、カードはHTML/CSSで作り、画像ファイル名はconstまたはCSS変数で後から変更しやすくしてください。';
 
-  return `以下の内容で、GitHub Pagesで公開できるLPを作ってください。外部ライブラリは使わず、index.html / style.css / script.js / README.md を作成してください。最後に変更内容をgit commitしてください。\n\n【依頼者名】${data.clientName}\n【商品名・サービス名】${data.serviceName}\n【LPの目的】${data.lpGoal}\n【ターゲット】${data.target}\n【ターゲットの悩み】${data.pain}\n【叶えたい未来】${data.future}\n【一番伝えたい強み】${data.strength}\n【入れたい文章・素材】${data.materials}\n【CTA文言】${data.ctaText}\n【CTAリンク先URL】${data.ctaUrl}\n\n【LP構成】\n${sections.map((section, index) => `${index + 1}. ${section}`).join('\n')}\n\n【セクション別文章案】\n${sectionCopy}\n\n【デザイン指示】\n${designDirections}\n\n【画像の扱い】\n${imageInstruction}\nCTAリンクは後から変更しやすいように、script.jsまたはHTML上部に設定値としてまとめてください。画像ファイル名も後から変更しやすくしてください。\n\n【画像生成プロンプト】\n${imagePrompts}\n\n【必ず守ること】\n- スマホ幅390pxで崩れない\n- 横スクロールを出さない\n- GitHub Pagesでそのまま動く\n- 文字、入力欄、ボタンはHTML/CSSで表示する\n- 画像に文字を焼き込まない\n- ${data.mustDo}\n\n【やってほしくないこと】\n- ${data.dontDo}`;
+  return `以下の内容で、GitHub Pagesで公開できるLPを作ってください。外部ライブラリは使わず、index.html / style.css / script.js / README.md を作成してください。最後に変更内容をgit commitしてください。\n\n【依頼者名】${data.clientName}\n【商品名・サービス名】${data.serviceName}\n【LPの目的】${data.lpGoal}\n【ターゲット】${data.target}\n【ターゲットの悩み】${data.pain}\n【叶えたい未来】${data.future}\n【一番伝えたい強み】${data.strength}\n【入れたい文章・素材】${data.materials}\n【CTA文言】${data.ctaText}\n【CTAリンク先URL】${data.ctaUrl}\n\n【LP構成】\n${sections.map((section, index) => `${index + 1}. ${section}`).join('\n')}\n\n【セクション別文章案】\n${sectionCopy}\n\n【デザイン指示】\n${designDirections}\n\n【画像の扱い】\n${imageInstruction}\nCTAリンクは後から変更しやすいように、script.jsまたはHTML上部に設定値としてまとめてください。画像ファイル名も後から変更しやすくしてください。\n\n【画像生成プロンプト】\n${imagePrompts}\n\n【必ず守ること】\n- スマホ幅390pxで崩れない\n- 横スクロールを出さない\n- GitHub Pagesでそのまま動く\n- 文字、入力欄、ボタンはHTML/CSSで表示する\n- 画像に文字を焼き込まない\n- 固定背景画像の枠にフォームを合わせようとしない\n- 入力欄や生成結果が長くなっても崩れない\n- ${data.mustDo}\n\n【やってほしくないこと】\n- 1枚背景画像にフォームや長文を無理やり重ねること\n- ${data.dontDo}`;
 }
 
 function buildPublishSteps() {
