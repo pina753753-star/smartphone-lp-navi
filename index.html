@@ -4,33 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>スマホLP制作ナビ</title>
-  <meta name="description" content="スマホだけでCodexに貼れるLP制作指示書を自動生成する、絵本風の初心者向けLP制作ナビです。">
+  <meta name="description" content="スマホだけでCodexに貼れるLP制作指示書を自動生成する、絵本風・シンデレラ風のLP制作ナビです。">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="page-shell">
     <main class="storybook" aria-label="スマホLP制作ナビ">
+      <div class="storybook-sparkles" aria-hidden="true">
+        <span class="star star-1">✦</span>
+        <span class="star star-2">✧</span>
+        <span class="star star-3">✦</span>
+        <span class="carriage">♛</span>
+      </div>
+
       <section class="hero" id="top">
-        <div class="design-sample" aria-label="tool-bg.PNGを参考にしたデザイン見本">
-          <img src="tool-bg.PNG" alt="絵本風・シンデレラ風の淡い水色とクリーム色の装飾フレーム見本">
-          <span>Design sample</span>
+        <div class="hero-visual" aria-label="絵本風・シンデレラ風のメインビジュアル">
+          <img src="tool-bg.PNG" alt="絵本風・シンデレラ風の淡い水色とクリーム色の装飾フレーム">
+          <span class="glass-shoe" aria-hidden="true">◌</span>
+          <span class="visual-caption">storybook magic design</span>
         </div>
 
-        <div class="hero-panel frame-card">
+        <div class="hero-panel story-card">
           <p class="eyebrow">Cinderella Story LP Planner</p>
           <h1>スマホLP制作ナビ</h1>
           <p class="hero-copy">スマホだけで、Codexに貼れるLP制作指示書をつくろう</p>
-          <p class="hero-note">魔法のノートに書き込むように、あなたのサービスの魅力をLPの物語へ整えます。</p>
-          <a class="primary-button" href="#planner">LP設計をはじめる</a>
+          <p class="hero-note">魔法のノートに書き込むだけで、LP構成・文章案・画像プロンプト・公開手順まで物語のように整えます。</p>
+          <a class="primary-button" href="#planner"><span>LP設計をはじめる</span></a>
         </div>
       </section>
 
-      <section class="frame-card can-do" aria-labelledby="canDoTitle">
+      <section class="story-card can-do" aria-labelledby="canDoTitle">
         <div class="section-title-wrap ribbon-title">
-          <span class="icon-badge">🎀</span>
+          <span class="icon-badge" aria-hidden="true">🎀</span>
           <div>
             <p class="mini-label">できること</p>
-            <h2 id="canDoTitle">魔法のメモからLP設計へ</h2>
+            <h2 id="canDoTitle">6つの魔法でLPづくりを案内</h2>
           </div>
         </div>
         <div class="feature-grid">
@@ -43,18 +51,18 @@
         </div>
       </section>
 
-      <section class="frame-card form-card" id="planner" aria-labelledby="formTitle">
+      <section class="story-card form-card" id="planner" aria-labelledby="formTitle">
         <div class="section-title-wrap ribbon-title">
-          <span class="icon-badge">📘</span>
+          <span class="icon-badge" aria-hidden="true">📘</span>
           <div>
             <p class="mini-label">LP制作フォーム</p>
-            <h2 id="formTitle">魔法のノートにLP情報を記録</h2>
+            <h2 id="formTitle">魔法のヒアリングシート</h2>
           </div>
         </div>
-        <p class="lead">未入力があっても大丈夫。「未入力」として、あとから編集しやすい指示書を作ります。</p>
+        <p class="lead">ページをめくるように入力してください。未入力でも「未入力」として、あとから直しやすい制作指示書にします。</p>
 
         <form id="lpForm" class="lp-form">
-          <fieldset class="page-step">
+          <fieldset class="page-step basic-step">
             <legend><span>Page 1</span>基本情報</legend>
             <div class="form-group">
               <label for="clientName">依頼者名</label>
@@ -77,29 +85,29 @@
             </div>
           </fieldset>
 
-          <fieldset class="page-step">
+          <fieldset class="page-step target-step">
             <legend><span>Page 2</span>ターゲット</legend>
-            <div class="form-group">
+            <div class="form-group wide-note">
               <label for="target">ターゲット</label>
               <textarea id="target" name="target" placeholder="例：スマホだけで副業LPを作りたい初心者女性"></textarea>
             </div>
-            <div class="form-group">
+            <div class="form-group wide-note">
               <label for="pain">ターゲットの悩み</label>
               <textarea id="pain" name="pain" placeholder="例：何を書けばいいかわからない、PCが苦手"></textarea>
             </div>
-            <div class="form-group">
+            <div class="form-group wide-note">
               <label for="future">叶えたい未来</label>
               <textarea id="future" name="future" placeholder="例：自分でLPを公開して申し込みを受け取れる"></textarea>
             </div>
           </fieldset>
 
-          <fieldset class="page-step">
+          <fieldset class="page-step design-step">
             <legend><span>Page 3</span>デザイン</legend>
-            <div class="form-group">
+            <div class="form-group wide-note">
               <label for="strength">一番伝えたい強み</label>
               <textarea id="strength" name="strength" placeholder="例：スマホだけで迷わず作れる手順つき"></textarea>
             </div>
-            <div class="form-group">
+            <div class="form-group wide-note">
               <label for="materials">入れたい文章・素材</label>
               <textarea id="materials" name="materials" placeholder="例：プロフィール、実績、写真、口コミ"></textarea>
             </div>
@@ -134,8 +142,8 @@
             </div>
           </fieldset>
 
-          <fieldset class="page-step">
-            <legend><span>Page 4</span>CTAと約束</legend>
+          <fieldset class="page-step cta-step">
+            <legend><span>Page 4</span>CTA</legend>
             <div class="form-group">
               <label for="ctaText">CTA文言</label>
               <input id="ctaText" name="ctaText" type="text" placeholder="例：無料で相談する">
@@ -144,24 +152,24 @@
               <label for="ctaUrl">CTAリンク先URL</label>
               <input id="ctaUrl" name="ctaUrl" type="url" placeholder="https://example.com">
             </div>
-            <div class="form-group">
+            <div class="form-group wide-note">
               <label for="mustDo">絶対に守ってほしいこと</label>
               <textarea id="mustDo" name="mustDo" placeholder="例：スマホで読みやすく、CTAを目立たせる"></textarea>
             </div>
-            <div class="form-group">
+            <div class="form-group wide-note">
               <label for="dontDo">やってほしくないこと</label>
               <textarea id="dontDo" name="dontDo" placeholder="例：文字を画像に焼き込む、横スクロールを出す"></textarea>
             </div>
           </fieldset>
 
           <div class="button-row">
-            <button type="submit" class="primary-button generate-button">LP制作指示書を作る</button>
+            <button type="submit" class="primary-button generate-button"><span>LP制作指示書を作る</span></button>
             <button type="button" class="ghost-button" id="resetButton">リセット</button>
           </div>
         </form>
       </section>
 
-      <section class="results-section frame-card" id="results" aria-live="polite" aria-labelledby="resultsTitle">
+      <section class="results-section story-card" id="results" aria-live="polite" aria-labelledby="resultsTitle">
         <div class="results-head ribbon-title">
           <div>
             <p class="mini-label">生成結果</p>
@@ -169,6 +177,7 @@
           </div>
           <button type="button" class="copy-all" id="copyAllButton">全部まとめてコピー</button>
         </div>
+        <p class="result-intro">ここに、Codexへそのまま渡せる「絵本の手紙」のような制作指示書が完成します。</p>
         <p class="copy-status" id="copyStatus" role="status"></p>
         <div id="outputCards" class="output-cards"></div>
       </section>
