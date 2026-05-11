@@ -20,6 +20,8 @@
   --radius-book: 36px;
   --radius-card: 28px;
   --radius-note: 22px;
+  --font-main: "Hiragino Maru Gothic ProN", "Zen Maru Gothic", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
+  --font-accent: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", serif;
 }
 
 * {
@@ -36,7 +38,7 @@ body {
   min-width: 0;
   overflow-x: hidden;
   color: var(--ink);
-  font-family: "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
+  font-family: var(--font-main);
   background-color: var(--sky);
   background-image:
     radial-gradient(circle at 12% 9%, rgba(255, 255, 255, 0.92) 0 2px, transparent 3px),
@@ -94,6 +96,7 @@ button {
 .storybook {
   position: relative;
   width: min(100%, 430px);
+  min-width: 0;
   min-height: 100vh;
   padding: 16px 14px 64px;
   overflow: hidden;
@@ -243,6 +246,8 @@ button {
 .story-card {
   position: relative;
   margin-top: 22px;
+  max-width: 100%;
+  min-width: 0;
   padding: 28px 18px 22px;
   background:
     linear-gradient(180deg, rgba(255, 253, 247, 0.98), rgba(255, 246, 229, 0.98)),
@@ -289,7 +294,7 @@ legend span {
   display: block;
   margin: 0 0 7px;
   color: var(--gold-deep);
-  font-family: "Hiragino Sans", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
+  font-family: var(--font-main);
   font-size: 0.66rem;
   font-weight: 900;
   line-height: 1.45;
@@ -307,14 +312,17 @@ h3 {
 }
 
 h1 {
-  font-size: clamp(2.35rem, 10.4vw, 3.22rem);
-  letter-spacing: 0.07em;
+  font-family: var(--font-accent);
+  font-size: clamp(2.05rem, 8.55vw, 2.72rem);
+  letter-spacing: 0.045em;
   text-shadow: 0 2px 0 #fffaf0, 0 10px 20px rgba(36, 59, 104, 0.16);
+  overflow-wrap: anywhere;
 }
 
 h2 {
   font-size: clamp(1.38rem, 6.2vw, 1.78rem);
   letter-spacing: 0.04em;
+  overflow-wrap: anywhere;
 }
 
 h3 {
@@ -360,8 +368,10 @@ h3 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  max-width: 100%;
   min-height: 58px;
-  padding: 14px 28px;
+  padding: 14px 24px;
+  text-align: center;
   overflow: hidden;
   color: #fffef8;
   background:
@@ -414,6 +424,11 @@ button.primary-button {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.section-title-wrap > div,
+.results-head > div {
+  min-width: 0;
 }
 
 .ribbon-title::before,
@@ -542,6 +557,8 @@ button.primary-button {
   position: relative;
   display: grid;
   gap: 13px;
+  min-width: 0;
+  min-inline-size: 0;
   margin: 0;
   padding: 31px 13px 16px;
   background:
@@ -606,6 +623,7 @@ legend span {
 
 .form-group {
   position: relative;
+  min-width: 0;
   padding: 13px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 248, 235, 0.94));
@@ -762,6 +780,7 @@ textarea:focus {
 
 .output-card {
   position: relative;
+  min-width: 0;
   padding: 20px 13px 14px;
   overflow: hidden;
   background:
@@ -801,11 +820,14 @@ textarea:focus {
   justify-content: space-between;
   gap: 10px;
   align-items: center;
+  min-width: 0;
   margin-bottom: 12px;
 }
 
 .output-card h3 {
+  min-width: 0;
   color: #2b426f;
+  overflow-wrap: anywhere;
 }
 
 .copy-button {
@@ -823,6 +845,7 @@ textarea:focus {
   padding: 15px;
   overflow: auto;
   white-space: pre-wrap;
+  word-break: break-word;
   overflow-wrap: anywhere;
   color: #35415b;
   background:
@@ -847,7 +870,7 @@ textarea:focus {
 
 @media (max-width: 390px) {
   .storybook {
-    padding-inline: 12px;
+    padding-inline: 10px;
   }
 
   .hero-visual {
@@ -867,7 +890,8 @@ textarea:focus {
   }
 
   h1 {
-    letter-spacing: 0.04em;
+    font-size: clamp(1.92rem, 8.15vw, 2.08rem);
+    letter-spacing: 0.025em;
   }
 
   .section-title-wrap {

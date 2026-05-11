@@ -6,6 +6,19 @@ const copyStatus = document.querySelector('#copyStatus');
 const storageKey = 'smartphone-lp-navi-form';
 let latestOutputs = [];
 
+function safeGetStorage() {
+  try {
+    const testKey = `${storageKey}-test`;
+    window.localStorage.setItem(testKey, '1');
+    window.localStorage.removeItem(testKey);
+    return window.localStorage;
+  } catch (error) {
+    return null;
+  }
+}
+
+const storage = safeGetStorage();
+
 const fields = [
   'clientName',
   'serviceName',
@@ -76,11 +89,14 @@ function saveForm() {
     data[field] = form.elements[field].value;
     return data;
   }, {});
-  localStorage.setItem(storageKey, JSON.stringify(rawData));
+  if (storage) {
+    storage.setItem(storageKey, JSON.stringify(rawData));
+  }
 }
 
 function restoreForm() {
-  const saved = localStorage.getItem(storageKey);
+  if (!storage) return;
+  const saved = storage.getItem(storageKey);
   if (!saved) return;
   try {
     const data = JSON.parse(saved);
@@ -90,7 +106,7 @@ function restoreForm() {
       }
     });
   } catch (error) {
-    localStorage.removeItem(storageKey);
+    storage.removeItem(storageKey);
   }
 }
 
@@ -203,24 +219,37 @@ function escapeHtml(text) {
 }
 
 async function copyText(text) {
-  try {
-    await navigator.clipboard.writeText(text);
-  } catch (error) {
+  let copied = false;
+
+  if (navigator.clipboard && window.isSecureContext) {
+    try {
+      await navigator.clipboard.writeText(text);
+      copied = true;
+    } catch (error) {
+      copied = false;
+    }
+  }
+
+  if (!copied) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
     textarea.setAttribute('readonly', '');
     textarea.style.position = 'fixed';
+    textarea.style.top = '0';
+    textarea.style.left = '0';
     textarea.style.opacity = '0';
     document.body.appendChild(textarea);
+    textarea.focus();
     textarea.select();
-    document.execCommand('copy');
+    copied = document.execCommand('copy');
     textarea.remove();
   }
-  showCopyStatus();
+
+  showCopyStatus(copied ? 'コピーしました' : 'コピーできませんでした。長押しで選択してコピーしてください');
 }
 
-function showCopyStatus() {
-  copyStatus.textContent = 'コピーしました';
+function showCopyStatus(message) {
+  copyStatus.textContent = message;
   window.setTimeout(() => {
     copyStatus.textContent = '';
   }, 1800);
@@ -255,13 +284,12 @@ copyAllButton.addEventListener('click', () => {
 
 resetButton.addEventListener('click', () => {
   form.reset();
-  localStorage.removeItem(storageKey);
+  if (storage) {
+    storage.removeItem(storageKey);
+  }
   latestOutputs = [];
   outputCards.innerHTML = '';
-  copyStatus.textContent = '入力内容をリセットしました';
-  window.setTimeout(() => {
-    copyStatus.textContent = '';
-  }, 1800);
+  showCopyStatus('入力内容をリセットしました');
 });
 
 restoreForm();
