@@ -10,10 +10,13 @@
       --ink: #223a5c;
       --brown: #6f5141;
       --gold: #d6ad5b;
+      --gold-soft: rgba(214, 173, 91, .28);
       --pink: #ef8bb6;
       --orange: #f6c468;
-      --line: rgba(214, 173, 91, .34);
-      --shadow: 0 16px 36px rgba(55, 91, 120, .16);
+      --paper: rgba(255, 253, 248, .78);
+      --paper-strong: rgba(255, 255, 252, .92);
+      --line: rgba(134, 178, 204, .34);
+      --shadow: 0 18px 42px rgba(55, 91, 120, .14);
       --font-sans: "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", "YuGothic", system-ui, sans-serif;
       --font-serif: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", serif;
     }
@@ -24,7 +27,7 @@
       margin: 0;
       color: var(--ink);
       font-family: var(--font-sans);
-      background: linear-gradient(180deg, #d8effa 0%, #f7fcff 48%, #fff2dc 100%);
+      background: linear-gradient(180deg, #d9eef9 0%, #f8fcff 48%, #fff4df 100%);
       overflow-x: hidden;
     }
 
@@ -36,7 +39,7 @@
       width: 100%;
       display: flex;
       justify-content: center;
-      padding: 0 0 40px;
+      padding: 0 0 42px;
     }
 
     .app {
@@ -44,59 +47,45 @@
       padding: 12px 10px 48px;
     }
 
-    .scene {
+    .paper-card {
       position: relative;
-      width: 100%;
-      aspect-ratio: 9 / 16;
-      margin: 0 auto 20px;
-      overflow: hidden;
+      margin: 0 0 18px;
+      padding: 34px 26px;
       border-radius: 28px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.48), rgba(255,250,240,.62)),
+        url("tool-bg.PNG") center / 100% 100% no-repeat;
       box-shadow: var(--shadow);
-      background: #fff8ef;
+      min-height: 620px;
     }
 
-    .scene-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+    .paper-card.compact { min-height: auto; padding-block: 32px; }
+    .paper-card.hero { min-height: 720px; display: grid; align-content: center; text-align: center; }
+    .paper-card.result { min-height: 700px; }
 
-    .overlay {
-      position: absolute;
-      inset: 0;
+    .paper-inner {
+      position: relative;
       z-index: 1;
-      pointer-events: none;
+      width: 100%;
+      max-width: 336px;
+      margin: 0 auto;
     }
-
-    .overlay * { pointer-events: auto; }
 
     .eyebrow,
     .small-label {
-      margin: 0;
+      margin: 0 0 8px;
       color: #a57938;
-      font-size: .66rem;
+      font-size: .68rem;
       font-weight: 900;
       letter-spacing: .16em;
       text-transform: uppercase;
     }
 
-    .hero-copy,
-    .lead,
-    .result-intro {
-      margin: 0;
-      color: var(--brown);
-      font-size: .85rem;
-      font-weight: 800;
-      line-height: 1.7;
-    }
-
     h1, h2, h3 {
       margin: 0;
       color: var(--ink);
-      line-height: 1.26;
+      line-height: 1.28;
     }
 
     h1, .section-title {
@@ -106,19 +95,29 @@
     }
 
     h1 {
-      font-size: clamp(2.28rem, 10.5vw, 3.1rem);
-      line-height: 1.15;
+      font-size: clamp(2.55rem, 11vw, 3.35rem);
+      line-height: 1.16;
     }
 
-    h2 { font-size: 1.36rem; }
-    h3 { font-size: .92rem; }
+    h2 { font-size: 1.48rem; }
+    h3 { font-size: .95rem; }
+
+    .hero-copy,
+    .lead,
+    .result-intro {
+      margin: 14px 0 0;
+      color: var(--brown);
+      font-size: .9rem;
+      font-weight: 800;
+      line-height: 1.78;
+    }
 
     .btn {
-      min-height: 46px;
+      min-height: 50px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 11px 18px;
+      padding: 12px 22px;
       border: 0;
       border-radius: 999px;
       text-decoration: none;
@@ -138,162 +137,117 @@
       width: 100%;
       color: var(--brown);
       background: rgba(255, 250, 241, .96);
-      border: 1px solid var(--line);
+      border: 1px solid var(--gold-soft);
       box-shadow: 0 8px 18px rgba(91, 69, 36, .08);
     }
 
-    .hero-text {
-      position: absolute;
-      left: 10%;
-      right: 10%;
-      top: 14.2%;
-      text-align: center;
-    }
-
-    .hero-text .hero-copy { margin-top: 12px; }
-
-    .hero-button {
-      position: absolute;
-      left: 24%;
-      right: 24%;
-      top: 64.8%;
-    }
-
-    .hero-button .btn { width: 100%; }
-
-    .memo-title {
-      position: absolute;
-      left: 13%;
-      right: 13%;
-      top: 10.4%;
-      text-align: center;
-    }
+    .hero-actions { margin-top: 28px; }
 
     .feature-grid {
-      position: absolute;
-      left: 13.5%;
-      right: 13.5%;
-      top: 28.2%;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px 12px;
+      gap: 12px;
+      margin-top: 24px;
     }
 
     .feature {
-      min-height: 104px;
+      min-height: 112px;
       display: grid;
-      align-content: end;
-      justify-items: center;
-      gap: 3px;
-      padding: 50px 4px 10px;
+      place-items: center;
+      gap: 5px;
+      padding: 14px 8px;
       text-align: center;
-      background: transparent;
+      border-radius: 22px;
       color: var(--brown);
-      font-size: .76rem;
+      background: rgba(255,255,255,.72);
+      border: 1px solid var(--line);
+      box-shadow: inset 0 0 0 3px rgba(255,255,255,.48);
+      font-size: .8rem;
       font-weight: 900;
     }
 
-    .feature span:first-child { display: none; }
-
+    .feature span:first-child { font-size: 1.35rem; }
     .feature b {
       color: #a57938;
-      font-size: .52rem;
+      font-size: .56rem;
       letter-spacing: .14em;
       text-transform: uppercase;
     }
 
-    .form-intro-title {
-      position: absolute;
-      left: 12%;
-      right: 12%;
-      top: 10%;
-      text-align: center;
-    }
-
-    .form-intro-title .lead { margin-top: 10px; }
-
     .page-map {
-      position: absolute;
-      left: 34%;
-      right: 14%;
-      top: 31.2%;
       display: grid;
-      gap: 19px;
+      gap: 12px;
+      margin-top: 28px;
     }
 
     .page-map a {
       display: flex;
       align-items: center;
-      min-height: 56px;
-      padding: 0 6px;
+      gap: 12px;
+      min-height: 58px;
+      padding: 10px 14px;
       text-decoration: none;
+      border-radius: 999px;
+      background: rgba(255,255,255,.7);
+      border: 1px solid var(--line);
       color: var(--ink);
       font-weight: 900;
-      border-radius: 999px;
-      background: transparent;
     }
 
-    .page-dot { display: none; }
-
-    .page-title {
-      position: absolute;
-      left: 12%;
-      right: 12%;
-      top: 10.5%;
-      text-align: center;
+    .page-dot {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: linear-gradient(135deg, #82b5d1, #a8c6df);
+      box-shadow: 0 8px 15px rgba(72, 108, 140, .16);
     }
-
-    .page-title .section-title { font-size: 1.22rem; }
 
     .field-list {
-      position: absolute;
-      left: 14%;
-      right: 14%;
       display: grid;
+      gap: 14px;
+      margin-top: 24px;
     }
-
-    .page-basic .field-list { top: 28.5%; gap: 34px; }
-    .page-target .field-list { top: 27%; gap: 35px; }
-    .page-design .field-list { top: 22.5%; gap: 12px; }
-    .page-cta .field-list { top: 20.5%; gap: 15px; }
 
     .form-group {
       display: grid;
-      gap: 5px;
-      padding: 0;
-      border: 0;
-      border-radius: 0;
-      background: transparent;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid rgba(214, 173, 91, .18);
+      border-radius: 20px;
+      background: rgba(255,255,255,.62);
+      box-shadow: 0 8px 20px rgba(55, 91, 120, .06);
     }
 
     .form-group label {
       color: var(--brown);
-      font-size: .76rem;
+      font-size: .82rem;
       font-weight: 900;
-      padding-left: 4px;
-      text-shadow: 0 1px 0 rgba(255,255,255,.9);
     }
 
     input, select, textarea {
       width: 100%;
       min-width: 0;
       color: var(--ink);
-      border: 1px solid rgba(135, 189, 216, .5);
-      border-radius: 13px;
-      background: rgba(255,255,255,.9);
+      border: 1px solid rgba(135, 189, 216, .48);
+      border-radius: 15px;
+      background: rgba(255,255,255,.92);
       outline: none;
       box-shadow: inset 0 2px 7px rgba(66,62,50,.05);
     }
 
     input, select {
-      min-height: 38px;
-      padding: 0 11px;
+      min-height: 44px;
+      padding: 0 12px;
     }
 
     textarea {
-      min-height: 72px;
-      padding: 9px 11px;
-      line-height: 1.5;
+      min-height: 88px;
+      padding: 11px 12px;
+      line-height: 1.55;
       resize: vertical;
     }
 
@@ -303,89 +257,52 @@
       background: #fff;
     }
 
-    .page-design input,
-    .page-design select,
-    .page-cta input,
-    .page-cta select { min-height: 34px; }
-
-    .page-design textarea { min-height: 48px; }
-    .page-cta textarea { min-height: 58px; }
-
-    .page-design .form-group,
-    .page-cta .form-group { gap: 3px; }
-    .page-design .form-group label,
-    .page-cta .form-group label { font-size: .7rem; }
-
     .button-scene {
-      margin: -4px 10px 18px;
+      margin: -2px 10px 18px;
       display: grid;
       gap: 10px;
     }
 
     .generate-button { width: 100%; }
 
-    .results-title {
-      position: absolute;
-      left: 11%;
-      right: 11%;
-      top: 13%;
-      text-align: center;
-    }
-
-    .result-copy-wrap {
-      position: absolute;
-      top: 24.8%;
-      right: 12%;
-      z-index: 2;
+    .results-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
     }
 
     .copy-all, .copy-button {
-      min-height: 36px;
-      padding: 7px 11px;
+      min-height: 38px;
+      padding: 8px 12px;
       border-radius: 999px;
       color: var(--ink);
-      font-size: .74rem;
+      font-size: .78rem;
       font-weight: 900;
       background: rgba(255, 245, 220, .92);
       border: 1px solid rgba(215,173,84,.44);
       box-shadow: 0 8px 18px rgba(91,69,36,.08);
     }
 
-    .result-area {
-      position: absolute;
-      left: 11.5%;
-      right: 11.5%;
-      top: 30%;
-      bottom: 18%;
-      display: grid;
-      grid-template-rows: auto 1fr;
-      gap: 8px;
-    }
-
-    .result-intro { text-align: center; font-size: .76rem; }
-
     .copy-status {
       min-height: 1.2em;
-      margin: 0;
+      margin: 8px 0 0;
       color: #0f7a6e;
-      font-size: .78rem;
+      font-size: .82rem;
       font-weight: 900;
       text-align: center;
     }
 
     .output-cards {
-      min-height: 0;
       display: grid;
-      gap: 10px;
-      overflow: auto;
-      padding: 2px 2px 12px;
-      -webkit-overflow-scrolling: touch;
+      gap: 12px;
+      margin-top: 16px;
     }
 
     .output-card {
-      padding: 11px;
+      padding: 13px;
       border-radius: 18px;
-      background: rgba(255,253,248,.9);
+      background: rgba(255,253,248,.92);
       border: 1px solid rgba(215,173,84,.32);
       box-shadow: 0 8px 14px rgba(55,91,120,.08);
     }
@@ -398,10 +315,10 @@
       margin-bottom: 8px;
     }
 
-    .output-card h3 { font-size: .84rem; }
+    .output-card h3 { font-size: .86rem; }
 
     .output-text {
-      max-height: 230px;
+      max-height: 260px;
       overflow: auto;
       white-space: pre-wrap;
       word-break: break-word;
@@ -409,56 +326,44 @@
       padding: 10px;
       border-radius: 14px;
       color: #40576f;
-      background: rgba(255,248,235,.9);
-      font: 700 .76rem/1.62 "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: rgba(255,248,235,.92);
+      font: 700 .77rem/1.64 "Hiragino Sans", "Yu Gothic", sans-serif;
     }
 
     @media (max-width: 390px) {
       .app { padding-inline: 8px; }
-      .scene { border-radius: 24px; margin-bottom: 14px; }
-      h1 { font-size: 2.2rem; }
-      .hero-copy, .lead { font-size: .78rem; }
-      .feature-grid { gap: 8px; }
-      .feature { min-height: 92px; padding-top: 42px; font-size: .68rem; }
-      .feature b { font-size: .48rem; }
-      .page-map { gap: 13px; }
-      .page-map a { min-height: 51px; font-size: .82rem; }
-      .page-basic .field-list { gap: 26px; }
-      .page-target .field-list { gap: 24px; }
-      .page-design .field-list { gap: 8px; }
-      .page-cta .field-list { gap: 10px; }
-      .form-group label { font-size: .68rem; }
-      input, select { min-height: 34px; font-size: .78rem; }
-      textarea { min-height: 58px; font-size: .78rem; }
-      .page-design textarea { min-height: 42px; }
-      .page-cta textarea { min-height: 50px; }
+      .paper-card { border-radius: 24px; padding: 30px 22px; min-height: 580px; }
+      .paper-card.hero { min-height: 680px; }
+      .paper-card.result { min-height: 660px; }
+      h1 { font-size: 2.28rem; }
+      h2 { font-size: 1.28rem; }
+      .hero-copy, .lead { font-size: .8rem; }
+      .feature-grid { gap: 10px; }
+      .feature { min-height: 100px; font-size: .74rem; }
+      .form-group { padding: 10px; }
+      input, select { min-height: 40px; font-size: .82rem; }
+      textarea { min-height: 76px; font-size: .82rem; }
     }
   </style>
 </head>
 <body>
   <div class="page-shell">
     <main class="app" aria-label="スマホLP制作ナビ">
-      <section class="scene hero-scene" id="top" aria-labelledby="heroTitle">
-        <img class="scene-img" src="hero-bg.PNG" alt="シンデレラ風の絵本背景と案内役の双子">
-        <div class="overlay">
-          <div class="hero-text">
-            <p class="eyebrow">Cinderella Story LP Planner</p>
-            <h1 id="heroTitle">スマホLP制作<br>ナビ</h1>
-            <p class="hero-copy">スマホだけで、Codexに貼れるLP制作指示書をつくろう。</p>
-          </div>
-          <div class="hero-button">
+      <section class="paper-card hero" id="top" aria-labelledby="heroTitle">
+        <div class="paper-inner">
+          <p class="eyebrow">Cinderella Story LP Planner</p>
+          <h1 id="heroTitle">スマホLP制作<br>ナビ</h1>
+          <p class="hero-copy">スマホだけで、Codexに貼れるLP制作指示書をつくろう。</p>
+          <div class="hero-actions">
             <a class="btn primary" href="#memo">LP設計をはじめる</a>
           </div>
         </div>
       </section>
 
-      <section class="scene memo-scene" id="memo" aria-labelledby="memoTitle">
-        <img class="scene-img" src="memo-bg.PNG" alt="6つの機能カードを配置する魔法のメモ背景">
-        <div class="overlay">
-          <div class="memo-title">
-            <p class="small-label">できること</p>
-            <h2 id="memoTitle" class="section-title">魔法のメモから<br>LP設計へ</h2>
-          </div>
+      <section class="paper-card compact" id="memo" aria-labelledby="memoTitle">
+        <div class="paper-inner">
+          <p class="small-label">できること</p>
+          <h2 id="memoTitle" class="section-title">魔法のメモから<br>LP設計へ</h2>
           <div class="feature-grid">
             <div class="feature"><span>📖</span><b>Story</b><span>LP構成を作る</span></div>
             <div class="feature"><span>✍️</span><b>Copy</b><span>文章案を作る</span></div>
@@ -471,14 +376,11 @@
       </section>
 
       <form id="lpForm" class="lp-form">
-        <section class="scene form-intro-scene" id="planner" aria-labelledby="formTitle">
-          <img class="scene-img" src="form-bg.PNG" alt="LP制作フォーム全体の案内背景">
-          <div class="overlay">
-            <div class="form-intro-title">
-              <p class="small-label">LP制作フォーム</p>
-              <h2 id="formTitle" class="section-title">あなたのLP情報を<br>教えてください</h2>
-              <p class="lead">未入力があっても大丈夫。あとから直しやすい指示書を作ります。</p>
-            </div>
+        <section class="paper-card compact" id="planner" aria-labelledby="formTitle">
+          <div class="paper-inner">
+            <p class="small-label">LP制作フォーム</p>
+            <h2 id="formTitle" class="section-title">あなたのLP情報を<br>教えてください</h2>
+            <p class="lead">未入力があっても大丈夫。あとから直しやすい指示書を作ります。</p>
             <nav class="page-map" aria-label="入力ページ">
               <a href="#basic"><span class="page-dot">1</span><span>基本情報</span></a>
               <a href="#target"><span class="page-dot">2</span><span>ターゲット</span></a>
@@ -488,13 +390,10 @@
           </div>
         </section>
 
-        <section class="scene page-basic" id="basic" aria-labelledby="basicTitle">
-          <img class="scene-img" src="page-basic-bg.PNG" alt="基本情報入力用の背景">
-          <div class="overlay">
-            <div class="page-title">
-              <p class="small-label">Page 1</p>
-              <h2 id="basicTitle" class="section-title">基本情報を<br>入力してください</h2>
-            </div>
+        <section class="paper-card compact" id="basic" aria-labelledby="basicTitle">
+          <div class="paper-inner">
+            <p class="small-label">Page 1</p>
+            <h2 id="basicTitle" class="section-title">基本情報を<br>入力してください</h2>
             <div class="field-list">
               <div class="form-group"><label for="clientName">依頼者名</label><input id="clientName" name="clientName" type="text" placeholder="例：シンデレラ企画"></div>
               <div class="form-group"><label for="serviceName">商品名・サービス名</label><input id="serviceName" name="serviceName" type="text" placeholder="例：スマホLP講座"></div>
@@ -503,13 +402,10 @@
           </div>
         </section>
 
-        <section class="scene page-target" id="target" aria-labelledby="targetTitle">
-          <img class="scene-img" src="page-target-bg.PNG" alt="ターゲット入力用の背景">
-          <div class="overlay">
-            <div class="page-title">
-              <p class="small-label">Page 2</p>
-              <h2 id="targetTitle" class="section-title">ターゲットについて<br>教えてください</h2>
-            </div>
+        <section class="paper-card compact" id="target" aria-labelledby="targetTitle">
+          <div class="paper-inner">
+            <p class="small-label">Page 2</p>
+            <h2 id="targetTitle" class="section-title">ターゲットについて<br>教えてください</h2>
             <div class="field-list">
               <div class="form-group"><label for="targetInput">ターゲット</label><textarea id="targetInput" name="target" placeholder="例：スマホだけで副業LPを作りたい初心者女性"></textarea></div>
               <div class="form-group"><label for="pain">ターゲットの悩み</label><textarea id="pain" name="pain" placeholder="例：何を書けばいいかわからない、PCが苦手"></textarea></div>
@@ -518,13 +414,10 @@
           </div>
         </section>
 
-        <section class="scene page-design" id="design" aria-labelledby="designTitle">
-          <img class="scene-img" src="page-design-bg.PNG" alt="デザイン入力用の背景">
-          <div class="overlay">
-            <div class="page-title">
-              <p class="small-label">Page 3</p>
-              <h2 id="designTitle" class="section-title">デザインについて<br>教えてください</h2>
-            </div>
+        <section class="paper-card compact" id="design" aria-labelledby="designTitle">
+          <div class="paper-inner">
+            <p class="small-label">Page 3</p>
+            <h2 id="designTitle" class="section-title">デザインについて<br>教えてください</h2>
             <div class="field-list">
               <div class="form-group"><label for="strength">一番伝えたい強み</label><textarea id="strength" name="strength" placeholder="例：スマホだけで迷わず作れる手順つき"></textarea></div>
               <div class="form-group"><label for="materials">入れたい文章・素材</label><textarea id="materials" name="materials" placeholder="例：プロフィール、実績、写真、口コミ"></textarea></div>
@@ -535,13 +428,10 @@
           </div>
         </section>
 
-        <section class="scene page-cta" id="cta" aria-labelledby="ctaTitle">
-          <img class="scene-img" src="page-cta-bg.PNG" alt="CTA入力用の背景">
-          <div class="overlay">
-            <div class="page-title">
-              <p class="small-label">Page 4</p>
-              <h2 id="ctaTitle" class="section-title">CTAについて<br>教えてください</h2>
-            </div>
+        <section class="paper-card compact" id="cta" aria-labelledby="ctaTitle">
+          <div class="paper-inner">
+            <p class="small-label">Page 4</p>
+            <h2 id="ctaTitle" class="section-title">CTAについて<br>教えてください</h2>
             <div class="field-list">
               <div class="form-group"><label for="ctaText">CTA文言</label><input id="ctaText" name="ctaText" type="text" placeholder="例：無料で相談する"></div>
               <div class="form-group"><label for="ctaUrl">CTAリンク先URL</label><input id="ctaUrl" name="ctaUrl" type="url" placeholder="https://example.com"></div>
@@ -557,23 +447,18 @@
         </div>
       </form>
 
-      <section class="scene result-scene" id="results" aria-live="polite" aria-labelledby="resultsTitle">
-        <img class="scene-img" src="result-bg.PNG" alt="完成したLP制作指示書の表示背景">
-        <div class="overlay">
-          <div class="results-title">
-            <p class="small-label">生成結果</p>
-            <h2 id="resultsTitle" class="section-title">完成した<br>LP制作指示書</h2>
-          </div>
-          <div class="result-copy-wrap">
+      <section class="paper-card result" id="results" aria-live="polite" aria-labelledby="resultsTitle">
+        <div class="paper-inner">
+          <div class="results-head">
+            <div>
+              <p class="small-label">生成結果</p>
+              <h2 id="resultsTitle" class="section-title">完成した<br>LP制作指示書</h2>
+            </div>
             <button type="button" class="copy-all" id="copyAllButton">全部コピー</button>
           </div>
-          <div class="result-area">
-            <div>
-              <p class="result-intro">ここに、Codexへそのまま渡せる制作指示書が完成します。</p>
-              <p class="copy-status" id="copyStatus" role="status"></p>
-            </div>
-            <div id="outputCards" class="output-cards"></div>
-          </div>
+          <p class="result-intro">ここに、Codexへそのまま渡せる制作指示書が完成します。</p>
+          <p class="copy-status" id="copyStatus" role="status"></p>
+          <div id="outputCards" class="output-cards"></div>
         </div>
       </section>
     </main>
